@@ -1,0 +1,5 @@
+AuthType Basic
+
+AuthName "123456"
+AuthUserFile C:\OSPanel\domains\api\core\.htpasswd
+Require valid-user
