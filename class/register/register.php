@@ -77,14 +77,14 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $query = $db->query('INSERT INTO users (name, email, password, nickname, token) VALUES (?s, ?s, ?s, ?s, ?s)', $name, $email, $password, $nickname, $jwt);
 
             if ($query) {
-                $returnData = msg(1, 200, $jwt);
+                $returnData = msg(1, 201, $jwt);
             } else {
                 $returnData = msg(0, 503, 'Произшошла ошибка');
             }
         }
 
     } else {
-         $returnData = msg(0, 403, 'Заполните данные');
+         $returnData = msg(0, 200, 'Заполните данные');
     }
 }
 
