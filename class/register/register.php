@@ -7,12 +7,11 @@ $jwt_create = new JwtHandler;
 $jwt = $jwt_create->jwtEncodeData('instagram.com');
 
 
-function msg($success, $status, $message, $extra = [])
+function msg($success, $message, $extra = [])
 {
     return array_merge([
         'success' => $success,
-        'status' => $status,
-        'message' => $message,
+        'message' => $message
     ], $extra);
 }
 
@@ -23,7 +22,7 @@ $returnData = [];
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
 
-    $returnData = msg(0, 404, 'Page Not Found!');
+    $returnData = msg(0, 'Page Not Found!');
 
 } else if(!is_null($input)) {
 
@@ -33,28 +32,28 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 
     $email = (!empty($input['email'])) ? $input['email'] : false;
     $name = (!empty($input['name'])) ? $input['name'] : false;
-    $nickname = (!empty($input['nickname'])) ? $input['nickname'] : false;
-    $pass = (!empty($input['pass'])) ? $input['pass'] : false;
+    $nickname = (!empty($input['username'])) ? $input['username'] : false;
+    $pass = (!empty($input['password'])) ? $input['password'] : false;
     $err = false;
 
     if ($email && $name && $nickname && $pass) {
        if (strlen($email) > 50) {
-         $returnData = msg(0, 200, 'Email длинный, должно быть 50 символов');
+         $returnData = msg(0, 'Email длинный, должно быть 50 символов');
          $err = true;
        }
 
        if (strlen($name) > 50) {
-         $returnData = msg(0, 200, 'Имя длинное, должно быть 50 символов');
+         $returnData = msg(0, 'Имя длинное, должно быть 50 символов');
          $err = true;
        }
 
        if (strlen($nickname) > 50) {
-          $returnData = msg(0, 200, 'Никнейм длинный, должно быть 50 символов');
+          $returnData = msg(0, 'Никнейм длинный, должно быть 50 символов');
          $err = true;
        }
 
        if (strlen($pass) > 150) {
-           $returnData = msg(0, 200, 'Пароль длинный, должно быть 150 символов');
+           $returnData = msg(0, 'Пароль длинный, должно быть 150 символов');
          $err = true;
        }
 
@@ -62,12 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
         $queryFetch = $db->fetch($query);
 
         if ($queryFetch['email'] == $email) {
-            $returnData = msg(0, 200, 'Пользователь  с таким email есть!');
+            $returnData = msg(0, 'Пользователь  с таким email есть!');
             $err = true;
         }
 
         if ($queryFetch['nickname'] == $nickname) {
-            $returnData = msg(0, 200, 'Пользователь  с таким никнейм есть!');
+            $returnData = msg(0, 'Пользователь  с таким никнейм есть!');
             $err = true;
         }
 
@@ -77,14 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $query = $db->query('INSERT INTO users (name, email, password, nickname, token) VALUES (?s, ?s, ?s, ?s, ?s)', $name, $email, $password, $nickname, $jwt);
 
             if ($query) {
-                $returnData = msg(1, 201, $jwt);
+                $returnData = msg(1, $jwt);
             } else {
-                $returnData = msg(0, 503, 'Произшошла ошибка');
+                $returnData = msg(0, 'Произшошла ошибка');
             }
         }
 
     } else {
-         $returnData = msg(0, 200, 'Заполните данные');
+         $returnData = msg(0, 'Заполните данные');
     }
 }
 
