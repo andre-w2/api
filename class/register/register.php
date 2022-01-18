@@ -57,15 +57,18 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
          $err = true;
        }
 
-        $query = $db->query('SELECT * from users WHERE name = ?s', $name);
-        $queryFetch = $db->fetch($query);
+        $queryEmail = $db->query('SELECT * from users WHERE email = ?s', $email);
+        $numEmail = $db->numRows($queryEmail);
 
-        if ($queryFetch['email'] == $email) {
+        if ($numEmail) {
             $returnData = msg(0, 'Пользователь  с таким email есть!');
             $err = true;
         }
 
-        if ($queryFetch['nickname'] == $nickname) {
+        $queryNick = $db->query('SELECT * from users WHERE nickname = ?s', $nickname);
+        $numNick = $db->numRows($queryNick);
+
+        if ($numNick) {
             $returnData = msg(0, 'Пользователь  с таким никнейм есть!');
             $err = true;
         }
