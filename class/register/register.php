@@ -7,8 +7,7 @@ $jwt_create = new JwtHandler;
 $jwt = $jwt_create->jwtEncodeData('instagram.com');
 
 
-function msg($success, $message, $extra = [])
-{
+function msg($success, $message, $extra = []){
     return array_merge([
         'success' => $success,
         'message' => $message
