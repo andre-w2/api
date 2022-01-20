@@ -79,7 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $query = $db->query('INSERT INTO users (name, email, password, nickname, token) VALUES (?s, ?s, ?s, ?s, ?s)', $name, $email, $password, $nickname, $jwt);
 
             if ($query) {
-                $returnData = msg(1, $jwt);
+                $queryUser = $db->query('SELECT * from users WHERE token = ?s', $jwt);
+                $returnData = msg(1, $db->fetch($queryUser));
             } else {
                 $returnData = msg(0, 'Произшошла ошибка');
             }

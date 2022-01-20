@@ -1,13 +1,16 @@
-<?php
+<?php 
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Max-Age: 86400');
+}
 
-$f_json = "./core/config.json";
-$json = file_get_contents($f_json);
-$jsonRead = json_decode($json, TRUE);
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
 
-header("Access-Control-Allow-Origin: ". $jsonRead['cors']);
-header("Access-Control-Allow-Methods: ". $methods);
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Authorization, Origin, X-Requested-With, Accept, X-PINGOTHER, Content-Type");
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+        header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
-
-?>
+    exit(0);
+}

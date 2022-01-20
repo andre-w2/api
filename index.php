@@ -1,6 +1,7 @@
 <?php
     require_once __DIR__ .'./core/system/db.php';
-
+    require_once __DIR__ .'/core/cors.php';
+	
 	$db = getConnection();
     
     $url = $_SERVER['REQUEST_URI'];
@@ -8,8 +9,6 @@
 	$url = $url[0];
  
 	if(strpos($url, 'register')) {
-		$methods = 'POST';
-    	require_once __DIR__ .'/core/cors.php';
 		require_once __DIR__ . '/class/register/register.php';
 	}
 ?>
