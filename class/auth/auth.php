@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
        $password = md5(sha1(md5($pass)));
 
        if ($fetchUser['password'] == $password) {
-           $returnData = msg(0, $fetchUser);
+           $returnData = msg(1, $fetchUser);
        } else {
            $returnData = msg(0, 'Данные не найдены');
        }
