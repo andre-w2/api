@@ -597,8 +597,9 @@ class SafeMySQL
 
 		if ( $this->emode == 'error' )
 		{
-			$err .= ". Error initiated in ".$this->caller().", thrown";
-			trigger_error($err,E_USER_ERROR);
+	    	throw new Exception("Ошибка подключение к базе!");
+	    	die();
+			// trigger_error($err, E_USER_ERROR);
 		} else {
 			throw new $this->exname($err);
 		}
